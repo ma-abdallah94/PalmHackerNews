@@ -8,15 +8,17 @@ export class NewestPage {
   constructor(page: Page) {
     this.page = page;
     this.stories = page.locator('tr.athing.submission');
-    this.moreLink = page.getByRole('link', { name: 'More', exact: true });
+    this.moreLink = page.locator('//a[@class="morelink"]');
   }
 
   async navigateToNewestPage() {
-    await this.page.goto('https://news.ycombinator.com/newest');
+    await this.page.goto('https://news.ycombinator.com/newest', { waitUntil: 'domcontentloaded' });
+    await this.stories.first().waitFor();
   }
 
   async goToNextPage() {
     await this.moreLink.click();
+    await this.stories.first().waitFor();
   }
 
   async idsOnThisPage(): Promise<number[]> {
