@@ -14,7 +14,7 @@ export class NewestPage {
   }
 
   async navigateToNewestPage() {
-    await this.page.goto('https://news.ycombinator.com/');
+    await this.page.goto('https://news.ycombinator.com/',{waitUntil: 'domcontentloaded'});
     await this.newLink.click();
   }
 
