@@ -12,6 +12,10 @@ export default defineConfig({
     navigationTimeout: 60_000,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    launchOptions: {
+      slowMo: 1_000,
+      args: ['--disable-blink-features=AutomationControlled'],
+    },
   },
   projects: [
     {
