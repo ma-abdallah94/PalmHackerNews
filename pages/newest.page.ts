@@ -1,26 +1,43 @@
 import { type Locator, type Page } from '@playwright/test';
-import { waitUntilSiteIsReady } from '../utils/site.utils';
 
 export class NewestPage {
   readonly page: Page;
   readonly stories: Locator;
   readonly moreLink: Locator;
+  readonly reloadLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.stories = page.locator('tr.athing.submission');
     this.moreLink = page.locator('//a[@class="morelink"]');
+    this.reloadLink = page.getByRole('link', { name: 'reload', exact: true });
   }
 
   async navigateToNewestPage() {
     await this.page.goto('https://news.ycombinator.com/newest', { waitUntil: 'domcontentloaded' });
-    await waitUntilSiteIsReady(this.page);
-    await this.stories.first().waitFor({ state: 'attached' });
+    await this.waitForStories();
   }
 
   async goToNextPage() {
+    await this.page.waitForTimeout(1_000);
     await this.moreLink.click();
-    await waitUntilSiteIsReady(this.page);
+    await this.waitForStories();
+  }
+
+  private async waitForStories() {
+    const tooManyRequests = this.page.getByText("we're not able to serve your requests this quickly");
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if ((await this.stories.count()) > 0) {
+        return;
+      }
+
+      if (await tooManyRequests.isVisible()) {
+        await this.page.waitForTimeout(3_000);
+        await this.reloadLink.click();
+      }
+    }
+
     await this.stories.first().waitFor({ state: 'attached' });
   }
 
