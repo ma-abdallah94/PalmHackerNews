@@ -29,4 +29,4 @@ npx playwright test
 
 ## Automatic check
 
-Each time a change is saved on the master branch, GitHub runs this test on its own.
+Each time a change is saved on the main branch, GitHub runs this test on its own.
