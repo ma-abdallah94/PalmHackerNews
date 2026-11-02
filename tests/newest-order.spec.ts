@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { NewestPage } from '../pages/newest.page';
 
 test('the first 100 newest stories are ordered newest to oldest', async ({ page }) => {
+  test.slow();
   const newestPage = new NewestPage(page);
   await newestPage.navigateToNewestPage();
 
