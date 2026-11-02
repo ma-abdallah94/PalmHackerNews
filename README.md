@@ -18,7 +18,7 @@ In each pair, the story that comes first should be newer. If the order is wrong,
 
 ```bash
 npm install
-npx playwright install chromium
+npx playwright install firefox
 ```
 
 ## Run the test

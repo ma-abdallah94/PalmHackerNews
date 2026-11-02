@@ -13,13 +13,12 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     launchOptions: {
       slowMo: 1_000,
-      args: ['--disable-blink-features=AutomationControlled'],
     },
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
     },
   ],
 });
