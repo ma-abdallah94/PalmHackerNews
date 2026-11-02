@@ -1,4 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
+import { waitUntilSiteIsReady } from '../utils/site.utils';
 
 export class NewestPage {
   readonly page: Page;
@@ -13,11 +14,13 @@ export class NewestPage {
 
   async navigateToNewestPage() {
     await this.page.goto('https://news.ycombinator.com/newest', { waitUntil: 'domcontentloaded' });
+    await waitUntilSiteIsReady(this.page);
     await this.stories.first().waitFor({ state: 'attached' });
   }
 
   async goToNextPage() {
     await this.moreLink.click();
+    await waitUntilSiteIsReady(this.page);
     await this.stories.first().waitFor({ state: 'attached' });
   }
 
