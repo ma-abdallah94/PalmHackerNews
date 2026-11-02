@@ -10,10 +10,11 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     navigationTimeout: 60_000,
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    video: 'retain-on-failure',
     screenshot: 'only-on-failure',
     launchOptions: {
-      slowMo: 1_000,
+      slowMo: 3_000,
       args: ['--disable-blink-features=AutomationControlled'],
     },
   },

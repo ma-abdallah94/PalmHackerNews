@@ -21,11 +21,11 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run tests
         run: npx playwright test
-      - name: Upload test results
+      - name: Upload trace and report
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-results
+          name: playwright-trace
           path: |
             test-results/
             playwright-report/
