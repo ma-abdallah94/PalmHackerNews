@@ -13,12 +13,12 @@ export class NewestPage {
 
   async navigateToNewestPage() {
     await this.page.goto('https://news.ycombinator.com/newest', { waitUntil: 'domcontentloaded' });
-    await this.stories.first().waitFor();
+    await this.stories.first().waitFor({ state: 'attached' });
   }
 
   async goToNextPage() {
     await this.moreLink.click();
-    await this.stories.first().waitFor();
+    await this.stories.first().waitFor({ state: 'attached' });
   }
 
   async idsOnThisPage(): Promise<number[]> {
